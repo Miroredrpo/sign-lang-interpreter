@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+TensorFlow
+OpenCV-Python
+Pillow
+SQLAlchemy
+numpy

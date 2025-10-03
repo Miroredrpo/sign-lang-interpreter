@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Interpreter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Sign Language Interpreter</h1>
+    <p>Welcome to the Sign Language Interpreter. Choose an option below:</p>
+    <ul>
+        <li><a href="{{ url_for('upload') }}">Upload Image for Training</a></li>
+        <li><a href="{{ url_for('training') }}">View Training Progress</a></li>
+        <li><a href="{{ url_for('live_recognition') }}">Live Recognition</a></li>
+    </ul>
+</body>
+</html>
