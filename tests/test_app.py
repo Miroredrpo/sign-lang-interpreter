@@ -1,6 +1,11 @@
 import unittest
 import os
 import io
+import sys
+
+# Add project root to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from sign_language_interpreter.app import app, db
 from sign_language_interpreter.models import Image
 

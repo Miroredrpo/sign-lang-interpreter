@@ -50,10 +50,10 @@ The application will automatically save the image to the correct folder.
 
 To run the Flask web application:
 
-1.  Make sure you are in the `sign_language_interpreter` directory and your virtual environment is activated.
-2.  Run the `app.py` script:
+1.  Make sure you are in the project's **root directory** (the one containing `run.py`) and that your virtual environment is activated.
+2.  Run the `run.py` script:
     ```bash
-    python app.py
+    python run.py
     ```
 3.  The application will be available at `http://127.0.0.1:5000`.
 

@@ -19,4 +19,32 @@ A real-time sign language interpreter using Python, Flask, and TensorFlow. This 
 
 ## Getting Started
 
-For detailed instructions on setup, training, and running the application, please see **`train.md`**.
+### Prerequisites
+
+- Python 3.x
+- Pip
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/sign-language-interpreter.git
+    cd sign-language-interpreter
+    ```
+
+2.  Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Running the Application
+
+To start the application, run the following command from the project's root directory:
+
+```bash
+python run.py
+```
+
+The application will be available at `http://127.0.0.1:5000`.
+
+For detailed instructions on training the model, please see **`train.md`**.

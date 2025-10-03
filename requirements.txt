@@ -6,3 +6,4 @@ OpenCV-Python
 Pillow
 SQLAlchemy
 numpy
+pytest
