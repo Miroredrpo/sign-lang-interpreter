@@ -1,22 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <h1>Upload Image for Training</h1>
-    <form method="post" enctype="multipart/form-data">
-        <label for="image">Choose image:</label>
-        <input type="file" name="image" id="image" accept=".png, .jpg, .jpeg">
-        <br>
-        <label for="letter">Letter:</label>
-        <input type="text" name="letter" id="letter" maxlength="1">
-        <br>
-        <button type="submit">Upload</button>
+{% extends "base.html" %}
+
+{% block title %}Upload Image{% endblock %}
+
+{% block content %}
+    <h2>Upload Image for Training</h2>
+    <p>Upload an image of a hand sign to add it to the training dataset. Please specify the letter that the sign represents.</p>
+
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+        <div class="mb-3">
+            <label for="image" class="form-label">Choose images:</label>
+            <input type="file" name="image" id="image" class="form-control" accept=".png, .jpg, .jpeg" required multiple>
+        </div>
+        <div class="mb-3">
+            <label for="letter" class="form-label">Letter:</label>
+            <input type="text" name="letter" id="letter" class="form-control" maxlength="1" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
     </form>
-    <a href="{{ url_for('index') }}">Back to Home</a>
-</body>
-</html>
+{% endblock %}

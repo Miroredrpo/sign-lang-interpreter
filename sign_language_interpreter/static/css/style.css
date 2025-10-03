@@ -1,34 +1,24 @@
 body {
-    font-family: sans-serif;
-    margin: 2em;
+    padding-top: 70px; /* Add padding for the fixed navbar */
 }
 
-h1 {
-    color: #333;
+.jumbotron {
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    background-color: #f8f9fa;
+    border-radius: .3rem;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+#prediction-result h2 {
+    font-size: 4rem;
+    font-weight: 300;
+    color: #212529;
 }
 
-li {
-    margin-bottom: 1em;
+.container {
+    max-width: 960px;
 }
 
-a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-form {
-    margin-top: 2em;
-}
-
-button {
-    padding: 0.5em 1em;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
+.navbar {
+    margin-bottom: 20px;
 }

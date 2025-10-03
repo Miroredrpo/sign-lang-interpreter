@@ -1,14 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Progress</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <h1>Training Progress</h1>
-    <p>Training progress will be displayed here.</p>
-    <a href="{{ url_for('index') }}">Back to Home</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Train Model{% endblock %}
+
+{% block content %}
+    <h2>Train a New Model</h2>
+    <p>Click the button below to start training a new model using all the images in the dataset. This process may take several minutes.</p>
+
+    <form action="{{ url_for('training') }}" method="post" class="mt-4">
+        <button type="submit" class="btn btn-primary">Start Training</button>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mt-4">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category or 'info' }}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+{% endblock %}

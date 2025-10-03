@@ -1,6 +1,6 @@
-# Training the Sign Language Interpreter
+# Training and Using the Sign Language Interpreter
 
-This guide provides detailed instructions on how to set up the environment, prepare the dataset, run the application, and train the model for the Sign Language Interpreter project.
+This guide provides detailed instructions on how to set up the environment, prepare the dataset, run the application, train a model, and use the live recognition feature.
 
 ## 1. Environment Setup
 
@@ -32,19 +32,19 @@ The accuracy of the model depends on the quality and quantity of the training da
 
 -   The training images are stored in the `sign_language_interpreter/dataset/training_images/` directory.
 -   Inside this directory, create a separate folder for each letter of the alphabet (e.g., `A`, `B`, `C`).
--   Place the corresponding images for each letter into their respective folders. For example, all images of the sign for 'A' should be in the `sign_language_interpreter/dataset/training_images/A/` folder.
+-   Place the corresponding images for each letter into their respective folders.
 
 ### Adding New Images
 
 You can add new images to the dataset using the web interface:
 
 1.  Run the application (see instructions below).
-2.  Navigate to the "Upload Image for Training" page.
+2.  Navigate to the **Upload** page.
 3.  Choose an image file (`.png`, `.jpg`, or `.jpeg`).
 4.  Enter the letter that the sign represents.
 5.  Click "Upload."
 
-The application will automatically save the image to the correct folder in the `dataset/training_images/` directory.
+The application will automatically save the image to the correct folder.
 
 ## 3. Running the Application
 
@@ -59,20 +59,18 @@ To run the Flask web application:
 
 ## 4. Model Training
 
-The model training process involves using the images in the `dataset/training_images/` directory to teach the neural network how to recognize sign language gestures.
+The model training process is initiated directly from the web interface.
 
-**Note:** The training functionality is not yet fully integrated into the web interface. The following steps describe the intended workflow.
-
-1.  **Initiate Training:**
-    A dedicated training script or a route in the web application will be used to start the training process. This script will:
-    -   Load the images from the dataset folders.
-    -   Preprocess the images (resize, normalize, etc.).
-    -   Use transfer learning on a pre-trained model (EfficientNetV2-B0).
-    -   Train the model on the prepared dataset.
-
-2.  **Model Saving:**
-    Once the training is complete, the trained model will be saved to `sign_language_interpreter/models/trained_model.h5`. This model will then be used for real-time recognition.
+1.  Navigate to the **Train** page.
+2.  Click the **"Start Training"** button.
+3.  The training process will start in the background. This may take several minutes, but the web application will remain responsive.
+4.  Once training is complete, the new model will be saved in the `sign_language_interpreter/models/` directory with a unique, timestamped name (e.g., `sign_language_model_20231027-143000.h5`).
 
 ## 5. Live Recognition
 
-After a model has been trained and saved, you can use the "Live Recognition" feature to get real-time interpretations of sign language gestures from your webcam. The application will load the trained model and use it to predict the meaning of the hand signs it sees.
+After a model has been trained and saved, you can use the **Live Recognition** feature.
+
+1.  Navigate to the **Live Recognition** page.
+2.  Select a trained model from the dropdown menu.
+3.  Click **"Load Model"**.
+4.  Once the model is loaded, the application will begin processing your webcam feed and displaying the predicted letter in real-time.

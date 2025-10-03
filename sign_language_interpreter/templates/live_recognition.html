@@ -1,27 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Recognition</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <h1>Live Sign Language Recognition</h1>
+{% extends "base.html" %}
 
-    <form method="POST">
-        <label for="model">Choose a model:</label>
-        <select name="model" id="model">
-            {% for model in models %}
-                <option value="{{ model }}">{{ model }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Load Model</button>
+{% block title %}Live Recognition{% endblock %}
+
+{% block content %}
+    <h2>Live Sign Language Recognition</h2>
+    <p>Select a trained model from the dropdown below and click "Load Model" to start the live recognition.</p>
+
+    <form method="POST" class="mt-4">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="model">Choose a model:</label>
+            <select name="model" id="model" class="form-select">
+                {% for model in models %}
+                    <option value="{{ model }}">{{ model }}</option>
+                {% else %}
+                    <option disabled>No models found. Please train a model first.</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Load Model</button>
+        </div>
     </form>
 
-    <video id="video" width="640" height="480" autoplay></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
+    <div class="mt-4 text-center">
+        <video id="video" width="640" height="480" autoplay class="border d-inline-block"></video>
+        <canvas id="canvas" width="640" height="480" class="border d-none"></canvas>
+    </div>
+
+    <div id="prediction-result" class="mt-4">
+        <!-- Predictions will be displayed here -->
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <a href="{{ url_for('index') }}">Back to Home</a>
-</body>
-</html>
+{% endblock %}

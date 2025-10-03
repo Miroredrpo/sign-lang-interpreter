@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Language Interpreter</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <h1>Sign Language Interpreter</h1>
-    <p>Welcome to the Sign Language Interpreter. Choose an option below:</p>
-    <ul>
-        <li><a href="{{ url_for('upload') }}">Upload Image for Training</a></li>
-        <li><a href="{{ url_for('training') }}">View Training Progress</a></li>
-        <li><a href="{{ url_for('live_recognition') }}">Live Recognition</a></li>
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to the Sign Language Interpreter</h1>
+        <p class="lead">This application uses machine learning to interpret American Sign Language (ASL) gestures in real-time.</p>
+        <hr class="my-4">
+        <p>Choose an option below to get started.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('live_recognition') }}" role="button">Live Recognition</a>
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('upload') }}" role="button">Upload Training Data</a>
+        <a class="btn btn-info btn-lg" href="{{ url_for('training') }}" role="button">Train Model</a>
+    </div>
+{% endblock %}
