@@ -7,3 +7,4 @@ Pillow
 SQLAlchemy
 numpy
 pytest
+scikit-learn

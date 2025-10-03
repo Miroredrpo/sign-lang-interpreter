@@ -26,13 +26,14 @@ def compile_model(model):
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
-def train_model(model, train_data, val_data, epochs=10):
+def train_model(model, train_data, val_data, epochs=10, class_weight=None):
     """
     Trains the model.
     """
     history = model.fit(train_data,
                         epochs=epochs,
-                        validation_data=val_data)
+                        validation_data=val_data,
+                        class_weight=class_weight)
     return history
 
 def save_model(model, filepath):

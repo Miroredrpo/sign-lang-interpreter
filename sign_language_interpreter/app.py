@@ -5,6 +5,7 @@ import os
 import threading
 from datetime import datetime
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from sklearn.utils.class_weight import compute_class_weight
 from .models import db, Image
 from .utils import model_utils
 import numpy as np
@@ -92,12 +93,14 @@ def train_model_in_background():
 
             datagen = ImageDataGenerator(
                 rescale=1./255,
-                rotation_range=20,
-                width_shift_range=0.2,
-                height_shift_range=0.2,
-                shear_range=0.2,
-                zoom_range=0.2,
+                rotation_range=40,
+                width_shift_range=0.3,
+                height_shift_range=0.3,
+                shear_range=0.3,
+                zoom_range=0.3,
                 horizontal_flip=True,
+                brightness_range=[0.5, 1.5],
+                channel_shift_range=50.0,
                 fill_mode='nearest',
                 validation_split=validation_split
             )
@@ -107,7 +110,8 @@ def train_model_in_background():
                 target_size=(224, 224),
                 batch_size=32,
                 class_mode='categorical',
-                subset='training'
+                subset='training',
+                shuffle=True
             )
 
             validation_generator = None
@@ -117,7 +121,8 @@ def train_model_in_background():
                     target_size=(224, 224),
                     batch_size=32,
                     class_mode='categorical',
-                    subset='validation'
+                    subset='validation',
+                    shuffle=False
                 )
                 if validation_generator.n == 0:
                     validation_generator = None
@@ -126,15 +131,22 @@ def train_model_in_background():
                 print("Not enough images to train. Please upload more images.")
                 return
 
+            # Calculate class weights to handle data imbalance
+            class_weights = compute_class_weight(
+                'balanced',
+                classes=np.unique(train_generator.classes),
+                y=train_generator.classes
+            )
+            class_weights_dict = dict(enumerate(class_weights))
+
             num_classes = len(train_generator.class_indices)
             model = model_utils.create_model(num_classes)
             model_utils.compile_model(model)
-            model_utils.train_model(model, train_generator, validation_generator, epochs=5)
+            model_utils.train_model(model, train_generator, validation_generator, epochs=25, class_weight=class_weights_dict)
 
             timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-            timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
             model_name_base = f"sign_language_model_{timestamp}"
-            model_filename = f"{model_name_base}.h5"
+            model_filename = f"{model_name_base}.keras"
             class_indices_filename = f"{model_name_base}_classes.json"
 
             models_dir = os.path.join(app.root_path, 'models')
@@ -171,19 +183,21 @@ def live_recognition():
     models_dir = os.path.join(app.root_path, 'models')
     if not os.path.exists(models_dir):
         os.makedirs(models_dir)
-    models = [f for f in os.listdir(models_dir) if f.endswith('.h5')]
+    models = [f for f in os.listdir(models_dir) if f.endswith('.keras')]
 
     if request.method == 'POST':
         selected_model_name = request.form.get('model')
         if selected_model_name:
             model_path = os.path.join(models_dir, selected_model_name)
-            class_map_path = os.path.join(models_dir, selected_model_name.replace('.h5', '_classes.json'))
+            model_name_base = selected_model_name.replace('.keras', '')
+            class_map_path = os.path.join(models_dir, f"{model_name_base}_classes.json")
 
             if not os.path.exists(class_map_path):
                 flash(f"Error: Class mapping file not found for model '{selected_model_name}'.", 'danger')
                 return redirect(url_for('live_recognition'))
 
             model = model_utils.load_model(model_path)
+            model_utils.compile_model(model)  # Re-compile the model after loading
             with open(class_map_path, 'r') as f:
                 class_names_map = json.load(f)
                 # Convert keys from string back to integer and create a list of names
